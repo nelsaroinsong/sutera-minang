@@ -1,4 +1,3 @@
-import { DatabaseSync } from 'node:sqlite';
 import crypto from 'node:crypto';
 import path from 'node:path';
 
@@ -61,9 +60,11 @@ const SEED_MENU_ITEMS = [
   { id: 'd8', category_id: 'c2', item_number: 8, name: 'Es Cincau', description: 'Potongan cincau hitam kenyal dengan sirup pandan wangi & santan gurih.', price: 7000, is_available: 1, is_signature: 0, badge: 'SEGAR GURIH', image_url: '/assets/menu/es-cincau.jpg' },
 ];
 
-export function getDb() {
+export async function getDb() {
   if (dbInstance) return dbInstance;
 
+  const sqliteSpecifier = 'node:' + 'sqlite';
+  const { DatabaseSync } = await import(sqliteSpecifier);
   const db = new DatabaseSync(DB_PATH);
   db.exec('PRAGMA journal_mode = WAL;');
   db.exec('PRAGMA foreign_keys = ON;');

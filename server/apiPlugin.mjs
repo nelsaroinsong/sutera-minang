@@ -57,7 +57,7 @@ async function handleApiRequest(req, res) {
   const method = (req.method || 'GET').toUpperCase();
 
   const { getDb, hashPassword, verifyPassword } = await import('./db.mjs');
-  const db = getDb();
+  const db = await getDb();
 
   // Auth: Sign Up Customer
   if (pathname === '/api/auth/signup' && method === 'POST') {
