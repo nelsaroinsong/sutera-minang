@@ -89,15 +89,29 @@ ALTER TABLE orders ENABLE ROW LEVEL SECURITY;
 ALTER TABLE order_items ENABLE ROW LEVEL SECURITY;
 
 -- Permissive public policies for ordering app demo
+DROP POLICY IF EXISTS "Public can read categories" ON categories;
 CREATE POLICY "Public can read categories" ON categories FOR SELECT USING (true);
+
+DROP POLICY IF EXISTS "Public can read menu_items" ON menu_items;
 CREATE POLICY "Public can read menu_items" ON menu_items FOR SELECT USING (true);
+
+DROP POLICY IF EXISTS "Public can insert orders" ON orders;
 CREATE POLICY "Public can insert orders" ON orders FOR INSERT WITH CHECK (true);
+
+DROP POLICY IF EXISTS "Public can read orders" ON orders;
 CREATE POLICY "Public can read orders" ON orders FOR SELECT USING (true);
+
+DROP POLICY IF EXISTS "Public can update orders" ON orders;
 CREATE POLICY "Public can update orders" ON orders FOR UPDATE USING (true);
+
+DROP POLICY IF EXISTS "Public can insert order items" ON order_items;
 CREATE POLICY "Public can insert order items" ON order_items FOR INSERT WITH CHECK (true);
+
+DROP POLICY IF EXISTS "Public can read order items" ON order_items;
 CREATE POLICY "Public can read order items" ON order_items FOR SELECT USING (true);
 
 -- Admin can manage menu items
+DROP POLICY IF EXISTS "Public can update menu items" ON menu_items;
 CREATE POLICY "Public can update menu items" ON menu_items FOR ALL USING (true);
 
 -- ==============================================================================

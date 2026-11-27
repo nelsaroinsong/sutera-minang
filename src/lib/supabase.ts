@@ -854,6 +854,13 @@ export function subscribeToOrders(onUpdate: (payload?: any) => void): () => void
         )
         .on(
           'postgres_changes',
+          { event: '*', schema: 'public', table: 'order_items' },
+          (payload) => {
+            onUpdate(payload);
+          }
+        )
+        .on(
+          'postgres_changes',
           { event: '*', schema: 'public', table: 'menu_items' },
           (payload) => {
             onUpdate(payload);

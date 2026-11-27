@@ -82,21 +82,48 @@ export function App() {
   useEffect(() => {
     loadData();
 
-    const unsubscribe = subscribeToOrders(async () => {
-      const updatedOrders = await getOrders();
-      setOrders(updatedOrders);
+    let refreshTimer: ReturnType<typeof setTimeout> | null = null;
 
-      const savedActiveOrderId = localStorage.getItem('SM_ACTIVE_ORDER_ID');
-      if (savedActiveOrderId) {
-        const found = updatedOrders.find((o) => o.id === savedActiveOrderId);
-        if (found) setActiveOrder(found);
+    const syncOrdersAndMenu = async () => {
+      try {
+        const [updatedOrders, updatedMenu] = await Promise.all([
+          getOrders(),
+          getMenuItems(),
+        ]);
+        setOrders(updatedOrders);
+        setMenuItems(updatedMenu);
+
+        const savedActiveOrderId = localStorage.getItem('SM_ACTIVE_ORDER_ID');
+        if (savedActiveOrderId) {
+          const found = updatedOrders.find((o) => o.id === savedActiveOrderId);
+          if (found) setActiveOrder(found);
+        }
+
+        setActiveReceiptOrder((prev) =>
+          prev ? updatedOrders.find((o) => o.id === prev.id) || prev : null
+        );
+      } catch (err) {
+        console.warn('Realtime sync error:', err);
       }
+    };
 
-      const updatedMenu = await getMenuItems();
-      setMenuItems(updatedMenu);
+    const unsubscribe = subscribeToOrders(() => {
+      // Small debounce so orders + order_items inserts settle together
+      if (refreshTimer) clearTimeout(refreshTimer);
+      refreshTimer = setTimeout(syncOrdersAndMenu, 150);
     });
 
+    // Fallback polling & focus sync in case WebSocket Realtime is unavailable
+    const pollInterval = setInterval(syncOrdersAndMenu, 4000);
+    const handleFocus = () => {
+      syncOrdersAndMenu();
+    };
+    window.addEventListener('focus', handleFocus);
+
     return () => {
+      if (refreshTimer) clearTimeout(refreshTimer);
+      clearInterval(pollInterval);
+      window.removeEventListener('focus', handleFocus);
       unsubscribe();
     };
   }, []);

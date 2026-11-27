@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { Category, MenuItem, Order, OrderStatus } from '../types';
 import { resolveDishImage } from '../data/initialMenu';
@@ -54,6 +54,23 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
     'orders'
   );
   const [soundEnabled, setSoundEnabled] = useState(true);
+  const knownOrderIdsRef = useRef<Set<string> | null>(null);
+
+  useEffect(() => {
+    if (knownOrderIdsRef.current === null) {
+      knownOrderIdsRef.current = new Set(orders.map((o) => o.id));
+      return;
+    }
+
+    const hasNewOrder = orders.some(
+      (o) => !knownOrderIdsRef.current!.has(o.id) && o.status === 'pending'
+    );
+    knownOrderIdsRef.current = new Set(orders.map((o) => o.id));
+
+    if (hasNewOrder && soundEnabled) {
+      playOrderChime();
+    }
+  }, [orders, soundEnabled]);
   const [filterType, setFilterType] = useState<'all' | 'dine_in' | 'takeaway'>(
     'all'
   );
