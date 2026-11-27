@@ -1,0 +1,440 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    color-scheme: light;
+    accent-color: #5C4028;
+
+    --bg-canvas: #FAF6F0;
+    --bg-surface: #FFFFFF;
+    --bg-subtle: #F3ECE2;
+    --bg-hover: #EBE1D3;
+
+    --brand-walnut: #4A331F;
+    --brand-walnut-hover: #382515;
+    --brand-gold: #9A6F18;
+    --brand-gold-soft: #FDF6E4;
+
+    --border-warm: #E5DCCB;
+    --border-strong: #C9B99E;
+
+    --text-primary: #261C14;
+    --text-secondary: #5C4D40;
+    --text-muted: #857464;
+
+    scrollbar-color: #C2B097 #F3ECE2;
+  }
+
+  body {
+    background-color: var(--bg-canvas);
+    color: var(--text-primary);
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection {
+    background-color: rgba(154, 111, 24, 0.2);
+    color: #261C14;
+  }
+}
+
+.font-serif-menu {
+  font-family: 'Playfair Display', Georgia, serif;
+}
+
+.font-cinzel {
+  font-family: 'Cinzel', Georgia, serif;
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ============================================================================
+ * Modern Web Guidance: Card Architecture (Horizontal Swiggy/Zomato style)
+ * ============================================================================ */
+.sm-dish-card {
+  container-type: inline-size;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+  background-color: #FFFFFF;
+  border: 1px solid var(--border-warm);
+  border-radius: 1.125rem;
+  padding: 0.875rem;
+  padding-bottom: 1.25rem;
+  box-shadow: 0 2px 10px rgba(38, 28, 20, 0.04);
+  transition: border-color 150ms ease, box-shadow 150ms ease, transform 150ms ease;
+  position: relative;
+}
+
+.sm-dish-card:hover {
+  border-color: var(--border-strong);
+  box-shadow: 0 6px 20px rgba(74, 51, 31, 0.08);
+}
+
+/* ============================================================================
+ * Modern Web Guidance: Branded Select Styling (appearance: base-select)
+ * ============================================================================ */
+.sm-select,
+.sm-select::picker(select) {
+  appearance: base-select;
+}
+
+.sm-select {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  width: 100%;
+  min-height: 2.375rem;
+  padding: 0.45rem 0.75rem;
+  font-family: inherit;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-strong);
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: border-color 150ms ease, background-color 150ms ease;
+}
+
+.sm-select:hover:not(:disabled) {
+  border-color: var(--brand-walnut);
+  background-color: var(--bg-subtle);
+}
+
+.sm-select:focus-visible {
+  outline: 2px solid var(--brand-walnut);
+  outline-offset: 1px;
+  border-color: var(--brand-walnut);
+}
+
+.sm-select::picker(select) {
+  background-color: #FFFFFF;
+  color: var(--text-primary);
+  border: 1px solid var(--border-strong);
+  border-radius: 0.5rem;
+  padding: 0.35rem;
+  box-shadow: 0 12px 32px rgba(38, 28, 20, 0.16);
+}
+
+.sm-select::picker-icon {
+  color: var(--text-secondary);
+  transition: transform 150ms ease;
+}
+
+.sm-select:open::picker-icon {
+  transform: rotate(180deg);
+}
+
+.sm-select option {
+  padding: 0.45rem 0.65rem;
+  border-radius: 0.375rem;
+  font-size: 0.8125rem;
+  color: var(--text-primary);
+  background-color: #FFFFFF;
+  cursor: pointer;
+}
+
+.sm-select option:hover,
+.sm-select option:focus {
+  background-color: var(--bg-subtle);
+  color: var(--brand-walnut);
+}
+
+.sm-select option:checked {
+  background-color: var(--brand-gold-soft);
+  color: var(--brand-walnut);
+  font-weight: 600;
+}
+
+.sm-select option::checkmark {
+  color: var(--brand-gold);
+}
+
+/* ============================================================================
+ * Modern Web Guidance: Forms & Tactile Buttons
+ * ============================================================================ */
+.sm-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.sm-label {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-secondary);
+}
+
+.sm-input,
+.sm-textarea {
+  width: 100%;
+  font: inherit;
+  font-size: 0.8125rem;
+  color: var(--text-primary);
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-strong);
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  min-height: 2.375rem;
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+}
+
+.sm-textarea {
+  resize: vertical;
+  field-sizing: content;
+  min-height: 4rem;
+}
+
+.sm-input::placeholder,
+.sm-textarea::placeholder {
+  color: #9C8D7E;
+}
+
+.sm-input:hover:not(:disabled),
+.sm-textarea:hover:not(:disabled) {
+  border-color: #A69279;
+}
+
+.sm-input:focus-visible,
+.sm-textarea:focus-visible {
+  outline: 2px solid var(--brand-walnut);
+  outline-offset: 1px;
+  border-color: var(--brand-walnut);
+}
+
+.sm-input:not([type="range"]):user-invalid,
+.sm-textarea:user-invalid {
+  border-color: #C93B2B;
+}
+
+/* Buttons */
+.sm-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.5rem 0.95rem;
+  min-height: 2.25rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #FFFDF9;
+  background-color: var(--brand-walnut);
+  border: 1px solid var(--brand-walnut);
+  border-radius: 0.45rem;
+  cursor: pointer;
+  transition: background-color 150ms ease, transform 100ms ease;
+}
+
+.sm-btn-primary:hover:not(:disabled) {
+  background-color: var(--brand-walnut-hover);
+}
+
+.sm-btn-primary:active:not(:disabled) {
+  transform: translateY(0.5px);
+}
+
+.sm-btn-primary:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.sm-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.375rem;
+  padding: 0.45rem 0.8rem;
+  min-height: 2.125rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--brand-walnut);
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-strong);
+  border-radius: 0.45rem;
+  cursor: pointer;
+  transition: background-color 150ms ease, border-color 150ms ease;
+}
+
+.sm-btn-secondary:hover:not(:disabled) {
+  background-color: var(--bg-subtle);
+  border-color: var(--brand-walnut);
+}
+
+.sm-btn-secondary:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.sm-btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  padding: 0.375rem 0.6rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  background-color: transparent;
+  border-radius: 0.4rem;
+  cursor: pointer;
+  transition: background-color 150ms ease, color 150ms ease;
+}
+
+.sm-btn-ghost:hover:not(:disabled) {
+  background-color: var(--bg-subtle);
+  color: var(--text-primary);
+}
+
+dialog:modal {
+  overscroll-behavior: contain;
+}
+dialog::backdrop {
+  overflow: hidden;
+  overscroll-behavior: contain;
+  background-color: rgba(38, 28, 20, 0.55);
+  backdrop-filter: blur(3px);
+}
+
+/* ============================================================================
+ * PRINT ISOLATION - THERMAL RECEIPT ONLY
+ * Completely hides the app layout (#root, nav, headers, buttons) during print.
+ * Only the portal-mounted #printable-receipt is sent to the printer.
+ * ============================================================================ */
+#printable-receipt {
+  display: none;
+}
+
+@media print {
+  /* Complete hiding of standard page content and UI roots */
+  html,
+  body {
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    font-size: 11px !important;
+  }
+
+  #root,
+  header,
+  nav,
+  main,
+  aside,
+  footer,
+  dialog,
+  .no-print {
+    display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+  }
+
+  #printable-receipt {
+    display: block !important;
+    visibility: visible !important;
+    position: static !important;
+    width: 76mm !important;
+    max-width: 76mm !important;
+    margin: 0 auto !important;
+    padding: 6mm 4mm !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+    font-family: 'Courier New', Courier, monospace !important;
+    font-size: 11px !important;
+    line-height: 1.35 !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+
+  #printable-receipt .receipt-header {
+    text-align: center;
+    padding-bottom: 6px;
+    margin-bottom: 6px;
+  }
+
+  #printable-receipt .receipt-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin: 0 0 2px 0;
+  }
+
+  #printable-receipt .receipt-sub {
+    font-size: 9px;
+    letter-spacing: 0.05em;
+    margin: 0;
+  }
+
+  #printable-receipt .receipt-date {
+    font-size: 9px;
+    margin-top: 2px;
+  }
+
+  #printable-receipt .receipt-meta {
+    font-size: 10px;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+
+  #printable-receipt .receipt-divider {
+    border-bottom: 1px dashed #000000;
+    margin: 6px 0;
+  }
+
+  #printable-receipt .receipt-items {
+    font-size: 10.5px;
+    margin: 4px 0;
+  }
+
+  #printable-receipt .receipt-item-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 3px;
+  }
+
+  #printable-receipt .receipt-item-name {
+    flex: 1;
+    padding-right: 6px;
+    word-break: break-word;
+  }
+
+  #printable-receipt .receipt-item-price {
+    white-space: nowrap;
+    text-align: right;
+  }
+
+  #printable-receipt .receipt-total-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    font-weight: 700;
+    margin: 6px 0;
+  }
+
+  #printable-receipt .receipt-footer {
+    text-align: center;
+    font-size: 9px;
+    line-height: 1.4;
+    margin-top: 6px;
+    padding-top: 4px;
+  }
+
+  @page {
+    size: 80mm auto;
+    margin: 2mm;
+  }
+}
